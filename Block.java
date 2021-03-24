@@ -1,15 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package hw3cs4450;
+//include package
 
-/*
-* The clas is the block class that holds the ID information for each type of blocks
-*/
+//block class holds information for different types of blocks
 public class Block {
 
+//declarations
 private boolean isActive;
 private BlockType blockType;
 private float x,y,z; 
@@ -28,6 +22,7 @@ private float x,y,z;
         BlockType(int i){
             blockID = i;
         }
+       
         public int getID(){
              return blockID;
         }
@@ -42,7 +37,7 @@ private float x,y,z;
     
     public void setCoords(float x, float y, float z){
         this.x = x;
-        this.y =y;
+        this.y = y;
         this.z = z;
 
     }
