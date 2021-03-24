@@ -1,16 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package hw3cs4450;
+//include package
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.util.glu.GLU;
-
 import static org.lwjgl.opengl.GL11.*;
-
 import java.nio.FloatBuffer;
 import java.util.Vector;
 import org.lwjgl.BufferUtils;
@@ -64,11 +57,10 @@ public class Basic {
         //retrieve parameters (width x height)
         parameters = displaySettings.setParameters();
         cameraSettings.checkRandomization();
-        
-        
 	Display.setFullscreen(false);
 	DisplayMode d[] = Display.getAvailableDisplayModes();
         DisplayMode displayMode = null;
+
         //gives the size for the window 
 	for (int i = 0; i < d.length; i++) 
         {
@@ -80,15 +72,13 @@ public class Basic {
 		break;
 	    }
 	}
-        
 	Display.setDisplayMode(displayMode);
 	Display.setTitle("Final Project Final Checkpoint");
 	Display.create();
         return displayMode;
     }
     
-    public void startDrawing(){
-               
+    public void startDrawing(){  
         FPCameraController fp;
         DisplayMode displayMode = null;
         try {
@@ -101,5 +91,4 @@ public class Basic {
             e.printStackTrace();
         }
     }
-    
 }
