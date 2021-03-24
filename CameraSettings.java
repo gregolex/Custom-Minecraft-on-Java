@@ -1,11 +1,13 @@
-package hw3cs4450;
+//include package
 
 import javax.swing.JOptionPane;
 
 public class CameraSettings 
 {
-     //creating singleton class
+    //instantiate classes
     private static CameraSettings cameraSettings_instance = null;
+     
+    //initializing camera instance with settings
     public static CameraSettings getInstance()
     {
         if (cameraSettings_instance == null)
@@ -15,10 +17,12 @@ public class CameraSettings
         return cameraSettings_instance;
     }
     
+    //declarations
     private static boolean acceptRandomization;
+     
+    //Allowing user to select if spawn point is randomized or not
     public void checkRandomization()
     {
-        
         //declarations
         Object[] options = {"Randomize Spawn", "Do Not Randomize Spawn"};
         
