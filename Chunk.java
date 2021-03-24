@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package hw3cs4450;
+//include package
 
 import java.nio.FloatBuffer;
 import java.util.Random;
@@ -15,8 +10,7 @@ import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 public class Chunk{
-    
-    
+    //declarations
     static final int CHUNK_SIZE = 32;
     static final int CUBE_LENGTH = 2;
     static final double PERSISTANCE = 0.3;
@@ -30,7 +24,8 @@ public class Chunk{
     private int StartX;
     private int StartY;
     private int StartZ;
-    
+   
+    //rendering blocks
     public void render(){
         glPushMatrix();
         glBindBuffer(GL_ARRAY_BUFFER,vBOVertexHandle);
@@ -67,19 +62,24 @@ public class Chunk{
         VertexTextureData.flip();
         VertexColorData.flip();
         VertexPositionData.flip();
+        
         //binds the texture
         glBindBuffer(GL_ARRAY_BUFFER, vBOTextureHandle);
         glBufferData(GL_ARRAY_BUFFER, VertexTextureData,GL_STATIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER,0);
+        
         //binds the vertex
         glBindBuffer(GL_ARRAY_BUFFER, vBOVertexHandle);
         glBufferData(GL_ARRAY_BUFFER, VertexPositionData, GL_STATIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER,0);
+        
         //binds the colors
         glBindBuffer(GL_ARRAY_BUFFER, vBOColorHandle);
         glBufferData(GL_ARRAY_BUFFER, VertexColorData, GL_STATIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
+    
+    //assigning cube color to all sides
     private float[] createCubeVertexCol(float[] CubeColorArray){
         float[] cubeColors = new float[CubeColorArray.length *4 *6];
         for(int i =0; i < cubeColors.length; i++){
@@ -87,6 +87,8 @@ public class Chunk{
         }
         return cubeColors;
     }
+    
+    //creating cube
     public static float[] createCube(float x, float y, float z){
         int offset = CUBE_LENGTH/2;
         
@@ -96,26 +98,31 @@ public class Chunk{
             x - offset, y + offset, z,
             x - offset, y + offset, z - CUBE_LENGTH,
             x + offset, y + offset, z - CUBE_LENGTH,
+            
             //Bottom Quad
             x + offset, y - offset, z - CUBE_LENGTH,
             x - offset, y - offset, z - CUBE_LENGTH,
             x - offset, y - offset, z,
             x + offset, y - offset, z,
+            
             //Front Quad
             x + offset, y + offset, z - CUBE_LENGTH,
             x - offset, y + offset, z - CUBE_LENGTH,
             x - offset, y - offset, z - CUBE_LENGTH,
             x + offset, y - offset, z - CUBE_LENGTH,
+            
             //Back Quad
             x + offset, y - offset, z,
             x - offset, y - offset, z,
             x - offset, y + offset, z,
             x + offset, y + offset, z,
+            
             //Left Quad
             x - offset, y + offset, z -CUBE_LENGTH,
             x - offset, y + offset, z,
             x - offset, y - offset, z,
             x - offset, y - offset, z - CUBE_LENGTH,
+            
             //Right Quad
             x + offset, y + offset, z,
             x + offset, y + offset, z - CUBE_LENGTH,
@@ -129,17 +136,21 @@ public class Chunk{
 
     public Chunk (int startX, int startY, int startZ){
         try {
-            texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("terrain.png"));
-        } catch(Exception e) {
+                texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("terrain.png"));
+            } catch(Exception e) {
         }
         
+        //Assigning buffers
         vBOColorHandle = glGenBuffers();
         vBOVertexHandle = glGenBuffers();
         vBOTextureHandle = glGenBuffers();
+        
+        //Assigning coordinates
         StartX = startX;
         StartY = startY;
         StartZ = startZ;
         
+        //Generating chunk size
         Random r = new Random(SEED);
         generateHeightMap();
         Blocks = new Block[CHUNK_SIZE][CHUNK_SIZE][CHUNK_SIZE];
@@ -166,6 +177,7 @@ public class Chunk{
             }
         }
         
+        //Creating world
         fillLevel++;
         for (int i = 0; i < CHUNK_SIZE; i++) {
             if(Blocks[i][fillLevel][0] == null) {
@@ -216,6 +228,7 @@ public class Chunk{
     
     }
      
+    //Creating TexCube
     public static float[] createTexCube(float x, float y, Block block)
     {
         float offset = (1024f/16) / 1024f;
@@ -268,35 +281,43 @@ public class Chunk{
         throw new RuntimeException("No texture mapping for block id: " + block.getId());
    }  
     
+    //Assigning textures
     private static float[] sameTextureOnAllSides(float x, float y, float offset, float left, float top){
+        //declarations
         float right = left+1;
         float bottom = top+1;
+        
         return new float[] {
             //TOP QUAD(DOWN=+Y)
             x+offset*right, y+offset*bottom,
             x+offset*left, y+offset*bottom,
             x+offset*left, y+offset*top,
             x+offset*right, y+offset*top,
+            
             //BOTTOM QUAD
             x+offset*right, y+offset*top,
             x+offset*left, y+offset*top,
             x+offset*left, y+offset*bottom,
             x+offset*right, y+offset*bottom,
+            
             //FRONT QUAD
             x+offset*left, y+offset*bottom,
             x+offset*right, y+offset*bottom,
             x+offset*right, y+offset*top,
             x+offset*left, y+offset*top,
+            
             //BACK QUAD
             x+offset*right, y+offset*top,
             x+offset*left, y+offset*top,
             x+offset*left, y+offset*bottom,
             x+offset*right, y+offset*bottom,
+            
             //LEFT QUAD
             x+offset*left, y+offset*bottom,
             x+offset*right, y+offset*bottom,
             x+offset*right, y+offset*top,
             x+offset*left, y+offset*top,
+            
             //RIGHT QUAD
             x+offset*left, y+offset*bottom,
             x+offset*right, y+offset*bottom,
@@ -305,11 +326,11 @@ public class Chunk{
         };
     }
     
+    //Creating a world with a set amount of blocks in height
     private void generateHeightMap()
     { 
         SimplexNoise noise = new SimplexNoise(CHUNK_SIZE, PERSISTANCE, SEED);
         heightMap = new double[CHUNK_SIZE][CHUNK_SIZE];
-
         for (int i = 0; i < CHUNK_SIZE; i++) {
             for (int j = 0; j < CHUNK_SIZE; j++) {
                 for (int k = 0; k < CHUNK_SIZE; k++) {
@@ -317,7 +338,5 @@ public class Chunk{
                 }
             }
         }
-        
-    }
-    
+    } 
 }
