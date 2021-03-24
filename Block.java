@@ -44,9 +44,11 @@ private float x,y,z;
     public boolean isActive(){
         return isActive;
     }
+    
     public void setActive(boolean active){
         isActive = active;
     }
+    
     public int getId(){
         return blockType.getID();
     }
