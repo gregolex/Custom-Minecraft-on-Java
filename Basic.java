@@ -9,9 +9,9 @@ import java.util.Vector;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.util.vector.Vector3f;
 
+//Class below sets up the basic parameters
 public class Basic {
     CameraSettings cameraSettings = CameraSettings.getInstance();
-    
     public static void initGL(DisplayMode displayMode) {
         glClearColor(0.529f, 0.808f, 0.922f, 1f);
         glMatrixMode(GL_PROJECTION);
@@ -78,6 +78,7 @@ public class Basic {
         return displayMode;
     }
     
+    //Setting up a few more parameters
     public void startDrawing(){  
         FPCameraController fp;
         DisplayMode displayMode = null;
