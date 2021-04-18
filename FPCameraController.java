@@ -1,4 +1,4 @@
-package hw3cs4450;
+//include package
 
 import java.awt.Component;
 import javax.swing.JFrame;
